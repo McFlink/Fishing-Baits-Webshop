@@ -1,0 +1,25 @@
+﻿@page
+@model IndexModel
+@inject Webshop.Data.AccessControl accessControl
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1 class="home-page-welcome">Calås & Flink's Fiskerihörna!</h1>
+<h2 class="random-products">Utvalda produkter</h2>
+<div class="container">
+    @foreach (var product in Model.Products)
+    {
+        <div class="bait-box">
+            <a asp-page="/Webstore/Details" asp-route-id="@product.Id">
+                <h3 class="product-name">@product.Name</h3>
+                <img src="/Images/@product.Image" alt="bait image" class="product-image" />
+                <p class="product-price">@(product.Price) :-</p>
+            </a>
+            <form method="post" asp-page="/webstore/Index" asp-page-handler="FastPurchase">
+                <input type="hidden" name="id" value="@product.Id">
+                <input type="submit" value="Köp" id="quick-purchase" />
+            </form>
+        </div>
+    }
+</div>

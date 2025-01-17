@@ -1,0 +1,42 @@
+﻿@using Webshop.Pages.Shared.Components.LoginMenu;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+    @await RenderSectionAsync("Scripts", required: false)
+</head>
+<body>
+    <header>
+        <environment names="Development">
+            @await Component.InvokeAsync(nameof(FakeLoginMenu))
+        </environment>
+        <nav class="navbar-header">
+            <ul class="navbar-list">
+                <li class="store-list-item">
+                    <div class="header-item start">
+                        <a asp-page="/Index" class="header-item"><img src="/Images/home-v2.png" class="anchor-image"/>Hem</a>
+                    </div>
+                </li>
+                <li class="store-list-item">
+                    <div class="header-item center">
+                        <a asp-page="/Webstore/Index" class="header-item" asp-route-pageId="1"><img src="/Images/store-v1.png" class="anchor-image" />Butik</a>
+                    </div>
+                </li>
+                <li class="cart-list-item">
+                    <div class="header-item end">
+                        <a asp-page="/Webstore/Cart" class="header-item"><img src="/Images/shopping-cart-v2.png" class="anchor-image" />Varukorg</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <hr />
+        @RenderBody()
+    </main>
+</body>
+</html>

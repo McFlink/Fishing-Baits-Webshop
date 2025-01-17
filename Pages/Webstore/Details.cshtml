@@ -1,0 +1,19 @@
+﻿@page
+@model Webshop.Pages.Webstore.DetailsModel
+@{
+}
+
+<div class="product-detail">
+    <h2>@Model.Product.Name</h2>
+    <strong><p>Kategori: @Model.Product.Category.Name</p></strong>
+    <img src="/Images/@Model.Product.Image" alt="bait image" class="details-product-image" />
+    <p>@Model.Product.Description</p>
+    <p class="price">@Model.Product.Price kr</p>
+
+    <form method="post" class="add-to-cart-form">
+        <input type="hidden" name="id" value="@Model.Product.Id">
+        <label for="quantity">Antal:</label>
+        <input type="number" name="quantity" id="quantity" value="1" min="1" />
+        <input type="submit" value="Lägg till i varukorg" id="cart-button" />
+    </form>
+</div>

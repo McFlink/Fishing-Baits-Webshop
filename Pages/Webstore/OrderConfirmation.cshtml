@@ -1,0 +1,13 @@
+﻿@page
+@model Webshop.Pages.Webstore.OrderConfirmationModel
+@{
+}
+
+<div class="confirmation-div">
+    <h1>TACK FÖR DIN BESTÄLLNING!</h1>
+    <h2>Totalbelopp: @Math.Round(Model.Sum, 2)kr</h2>
+
+    <form action="/Webstore/Index" class="confirmation-form">
+        <button type="submit" class="confirmation-button">Återgå till butiksidan</button>
+    </form>
+</div>

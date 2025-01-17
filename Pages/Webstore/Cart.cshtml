@@ -1,0 +1,90 @@
+﻿@page
+@model Webshop.Pages.Webstore.CartModel
+
+<h1>Varukorg</h1>
+<table class="cart">
+    @if (Model.Account_Products.Any())
+    {
+        <thead>
+            <tr>
+                <th></th>
+                <th>Namn</th>
+                <th>Antal</th>
+                <th>Styckpris</th>
+                <th colspan="2">Totalpris</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Account_Products)
+            {
+                <tr class="cart-item">
+                    <td><img src="/Images/@product.Product.Image" class="cart-product-image" /></td>
+                    <td>@product.Product.Name</td>
+                    <td>@product.Quantity</td>
+                    <td>@(product.Product.Price)kr</td>
+
+                    @{
+                        decimal totalPrice = Math.Round(product.Product.Price * product.Quantity, 2);
+                    }
+
+                    <td>@(totalPrice)kr</td>
+                    <td>
+                        <form method="post" class="remove-item-form" asp-page-handler="Delete">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <input type="submit" value="❌" id="remove-button" />
+                        </form>
+                    </td>
+                </tr>
+            }
+            <tr class="cart-footer">
+                <td colspan="3"></td>
+                <td>
+                    <form method="post" class="checkout-form">
+                        <input type="submit" value="Till kassan" id="order-button" />
+                    </form>
+                </td>
+                <td class="@(Model.Discount != 0 ? "discount-applied" : "")">
+                    @Math.Round(Model.Sum, 2)kr
+                </td>
+                <td class="last-cell">
+                    <form method="post" class="clear-cart" asp-page-handler="ClearCart">
+                        <input type="submit" value="Rensa varukorg" id="clear-cart-button" />
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    }
+    else
+    {
+        <tbody>
+            <tr>
+                <td>Din varukorg är tom</td>
+            </tr>
+        </tbody>
+    }
+</table>
+@if (Model.Account_Products.Any())
+{
+    <div class="discount-form">
+        <form>
+            <p>
+                <label for="discount-input" class="discount-label">Ange rabattkod:</label>
+                <input type="text" id="discount-input" name="DiscountCode" />
+                <input type="submit" id="discount-button" value="Uppdatera" />
+            </p>
+        </form>
+    </div>
+}
+
+@* Programmet decodade inte svenska bokstäver när denna stil låg i site.css och vi hittade ingen lösning, därav ligger den här *@
+<style>
+    .discount-form:hover::after {
+        content: "Ledtråd: Lärare på Teknikhögskolan.";
+        color: blue;
+        background-color: orange;
+        border-radius: 3px;
+        padding: 5px;
+        font-weight: bold;
+        font-size: 11px;
+    }
+</style>
